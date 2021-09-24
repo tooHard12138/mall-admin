@@ -25,8 +25,7 @@
 export default {
   methods: {
     handleBtn() {
-      const isCollapse = this.$store.state.sidebar.isCollapse;
-      this.$store.commit("sidebar/collapse", !isCollapse);
+      this.$store.commit("sidebar/collapse");
     }
   },
 };

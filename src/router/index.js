@@ -6,13 +6,19 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path:'/login',
+    name:"Login",
+    component:() => import("@/views/Login")
+  },
+
+  {
     path: '/',
     component: Layout,
     redirect: '/home',
     children: [{
       path: 'home',
       name: 'Home',
-      component: () => import('@/layout/index.vue'),
+      component: () => import('@/views/test'),
       meta: { title: '控制台', icon: 'dashboard' }
     }]
   },

@@ -1,11 +1,12 @@
 export default {
   namespaced: true,
   state: {
+    // 侧边栏折叠状态
     isCollapse: false
   },
   mutations: {
-    collapse(state, payload) {
-      state.isCollapse = payload;
+    collapse(state) {
+      state.isCollapse = !state.isCollapse;
     },
   },
 };
