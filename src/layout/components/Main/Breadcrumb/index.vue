@@ -1,7 +1,13 @@
 <template>
   <div class="bread-crumb-container clearfix">
     <div class="btn">
-      <el-button @click="handleBtn" class="button" size="mini" type="primary" icon="el-icon-s-fold"></el-button>
+      <el-button
+        @click="handleBtn"
+        class="button"
+        size="mini"
+        type="primary"
+        icon="el-icon-s-fold"
+      ></el-button>
     </div>
     <div class="breadcrumb">
       <el-breadcrumb separator="/">
@@ -13,10 +19,10 @@
     </div>
     <ul class="user">
       <li>
-        xxxxxxx
+        {{ $store.state.user.user.username }}
         <i class="el-icon-arrow-down"></i>
       </li>
-      <li>退出</li>
+      <li @click="out">退出</li>
     </ul>
   </div>
 </template>
@@ -25,39 +31,44 @@
 export default {
   methods: {
     handleBtn() {
-      this.$store.commit("sidebar/collapse");
-    }
+      this.$store.dispatch("sidebar/asyncSetIsCollapse");
+    },
+    out() {
+      this.$store.dispatch("user/userOut");
+      this.$router.push({ name: "Login" });
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";
-.bread-crumb-container{
+.bread-crumb-container {
   .size();
-  .btn, .breadcrumb{
+  .btn,
+  .breadcrumb {
     display: inline-block;
   }
-  .btn{
+  .btn {
     margin-right: 10px;
   }
-  .breadcrumb{
+  .breadcrumb {
     transform: translateY(3px);
   }
-  .user{
+  .user {
     text-align: center;
     cursor: pointer;
     float: right;
     margin-right: 20px;
     width: 150px;
-    li:not(:first-child){
+    li:not(:first-child) {
       display: none;
-      &:hover{
+      &:hover {
         background: #eee;
         color: #999;
       }
     }
-    &:hover li{
+    &:hover li {
       display: block;
     }
   }

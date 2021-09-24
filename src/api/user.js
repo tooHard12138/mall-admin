@@ -4,3 +4,4 @@ import ins from "./interceptors";
 export function userLogin(loginForm) {
   return ins.post("/passport/login", loginForm);
 }
+

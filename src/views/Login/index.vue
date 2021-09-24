@@ -34,6 +34,7 @@
 
 <script>
 import { userLogin } from "@/api/user";
+
 export default {
   data() {
     var emailReg = /^\w+@[a-z0-9]+\.[a-z]{2,4}$/;
@@ -70,7 +71,7 @@ export default {
         if (valid) {
           try {
             const user = await userLogin(this.loginForm);
-            this.$store.commit("user/user", user);
+            this.$store.dispatch("user/userLogin", user);
             this.$router.push("/");
           } catch (error) {
             this.$message({
@@ -78,9 +79,6 @@ export default {
               type: "error",
             });
           }
-        } else {
-          console.log("error submit!!");
-          return false;
         }
       });
     },
