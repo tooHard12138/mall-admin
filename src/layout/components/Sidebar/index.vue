@@ -4,7 +4,7 @@
       :router="true"
       background-color="#545c64"
       text-color="#fff"
-      :default-active="$route.path"
+      :default-active="$route.name"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -25,7 +25,7 @@
           v-for="children in router.children"
           v-if="showPage($store.state.user.user.role, children.meta.needAdmin)"
           :key="children.pash"
-          :index="handlePath(router.path, children.path)"
+          :index="children.name"
         >
           <i :class="children.meta.icon"></i>
           <span slot="title">{{ children.meta.title }}</span>
@@ -38,14 +38,12 @@
 <script>
 import { mapState } from "vuex";
 import showPage from "@/utils/showPage";
-import handlePath from "@/utils/handlePath";
 
 export default {
   computed: {
     ...mapState("sidebar", ["isCollapse"]),
   },
   methods: {
-    handlePath,
     showPage,
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
