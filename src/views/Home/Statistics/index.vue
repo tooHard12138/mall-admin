@@ -1,6 +1,6 @@
 <template>
-  <div>
-      测试
+  <div class="statistics-container">
+      统计
   </div>
 </template>
 
@@ -10,6 +10,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 </style>
