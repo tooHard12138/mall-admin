@@ -5,10 +5,15 @@ export default {
   state: {
     // 用户信息
     user: getUserCookie(),
+    // 类目列表
+    category: [],
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
+    },
+    setCategory(state, payload) {
+      state.category = payload;
     },
   },
   actions: {
@@ -24,6 +29,9 @@ export default {
         email: "",
         role: "",
       });
+    },
+    asyncSetCategory(ctx, payload) {
+      ctx.commit("setCategory", payload);
     },
   },
 };

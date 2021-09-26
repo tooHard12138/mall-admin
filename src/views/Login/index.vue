@@ -70,6 +70,7 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
+            // 密码正确，登录
             const user = await userLogin(this.loginForm);
             this.$store.dispatch("user/userLogin", user);
             this.$router.push("/");

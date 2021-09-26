@@ -4,6 +4,7 @@ import Layout from "@/layout";
 import store from "@/store";
 import { Message } from "element-ui";
 import showPage from "@/utils/showPage";
+import { queryCategory } from "@/api/category";
 
 Vue.use(VueRouter);
 
@@ -60,7 +61,6 @@ const routes = [
       },
     ],
   },
-
 ];
 
 const router = new VueRouter({
@@ -74,6 +74,9 @@ router.beforeEach((to, from, next) => {
   if (!to.meta.noAuth) {
     if (user.username && user.appkey) {
       if (showPage(user.role, to.meta.needAdmin)) {
+        queryCategory().then((resp) => {
+          store.dispatch("user/asyncSetCategory", resp.data);
+        });
         next();
       } else {
         next("/404");

@@ -1,4 +1,5 @@
 import axios from "axios";
+import stoer from "@/store";
 
 const ins = axios.create({
   baseURL: "https://mallapi.duyiedu.com",
@@ -6,7 +7,9 @@ const ins = axios.create({
 
 ins.interceptors.request.use(
   function(config) {
-    console.log(config);
+    if (!config.url.includes("passport")) {
+      config.params.appkey = stoer.state.user.user.appkey;
+    }
     return config;
   },
   function(error) {

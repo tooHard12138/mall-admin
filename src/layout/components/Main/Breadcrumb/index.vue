@@ -35,6 +35,7 @@ export default {
       this.$store.dispatch("sidebar/asyncSetIsCollapse");
     },
     out() {
+      // 登出
       this.$store.dispatch("user/userOut");
       this.$router.push({ name: "Login" });
     },
