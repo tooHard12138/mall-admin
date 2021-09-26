@@ -18,6 +18,7 @@ const routes = [
   {
     path: "/",
     alias: "/home",
+    name: "Home",
     component: Layout,
     redirect: "/statistics",
     meta: { title: "首页", icon: "el-icon-s-home" },
@@ -35,6 +36,7 @@ const routes = [
   {
     path: "/product",
     component: Layout,
+    name: "Product",
     redirect: "/product/productList",
     meta: { title: "商品", icon: "el-icon-document-copy" },
     children: [

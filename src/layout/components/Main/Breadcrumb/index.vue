@@ -1,5 +1,5 @@
 <template>
-  <div class="bread-crumb-container clearfix">
+  <div class="bread-crumb-container">
     <div class="btn">
       <el-button
         @click="handleBtn"
@@ -11,10 +11,11 @@
     </div>
     <div class="breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        <el-breadcrumb-item v-for="router in $route.matched" :key="router.name">
+          <router-link :to="{ name: router.name }">
+            {{ router.meta.title }}
+          </router-link>
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <ul class="user">
@@ -44,6 +45,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";
 .bread-crumb-container {
+  position: relative;
   .size();
   .btn,
   .breadcrumb {
@@ -58,14 +60,16 @@ export default {
   .user {
     text-align: center;
     cursor: pointer;
-    float: right;
-    margin-right: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 150px;
     li:not(:first-child) {
+      background: rgb(84, 92, 100);
+      color: #fff;
       display: none;
       &:hover {
-        background: #eee;
-        color: #999;
+        color: #409eff;
       }
     }
     &:hover li {
