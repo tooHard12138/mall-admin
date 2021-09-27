@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import EditAdd from "../components/EditAdd";
+import EditAdd from "../components/EditAdd/index";
 export default {
   components: {
     EditAdd,
