@@ -65,6 +65,7 @@ export default {
     top: 0;
     right: 0;
     width: 150px;
+    z-index: 100;
     li:not(:first-child) {
       background: rgb(84, 92, 100);
       color: #fff;

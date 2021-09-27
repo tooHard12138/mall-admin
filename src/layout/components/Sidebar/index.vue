@@ -4,7 +4,7 @@
       :router="true"
       background-color="#545c64"
       text-color="#fff"
-      :default-active="$route.name"
+      :default-active="active"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -23,7 +23,10 @@
         <el-menu-item
           :route="children"
           v-for="children in router.children"
-          v-if="showPage($store.state.user.user.role, children.meta.needAdmin) && !children.meta.hide"
+          v-if="
+            showPage($store.state.user.user.role, children.meta.needAdmin) &&
+            !children.meta.hide
+          "
           :key="children.pash"
           :index="children.name"
         >
@@ -42,6 +45,12 @@ import showPage from "@/utils/showPage";
 export default {
   computed: {
     ...mapState("sidebar", ["isCollapse"]),
+    active() {
+      if (this.$route.name === "ProductEdit") {
+        return "ProductList";
+      }
+      return this.$route.name;
+    },
   },
   methods: {
     showPage,
