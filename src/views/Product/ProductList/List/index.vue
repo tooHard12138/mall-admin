@@ -92,15 +92,40 @@ export default {
   },
   methods: {
     handleEdit(row) {
-      console.log("编辑", row);
-      this.$router.push({name: "ProductEdit"})
+      // 处理编辑
+      this.$emit("edit", row);
     },
     handleDelete(row) {
-      console.log("删除", row);
+      // 处理删除
+      const id = row.id;
+      this.$confirm(
+        `<span style="color: red;"">确认删除标题为:${row.title}的商品吗？</span>`,
+        "确认删除",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          showClose: false,
+          iconClass: "el-icon-question",
+          customClass: "confirmBox",
+          dangerouslyUseHTMLString: true,
+        }
+      )
+        .then(() => {
+          // 确认删除
+          this.$emit("delete", id);
+        })
+        .catch(() => {
+          // 取消删除
+          this.$emit("cancelDelete");
+        });
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.confirmBox {
+  transform: translateY(-200px);
+}
 </style>

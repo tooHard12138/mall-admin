@@ -6,3 +6,10 @@ export function productList(params = {}) {
     params,
   });
 }
+
+// 删除商品
+export function productDelete(id) {
+  return ins.delete(`/products/${id}`,{
+    params:{}
+  });
+}

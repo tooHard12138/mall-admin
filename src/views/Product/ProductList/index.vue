@@ -6,7 +6,12 @@
     </div>
     <div class="list-box">
       <!-- 表格 -->
-      <List :tableData="tableData" />
+      <List
+        :tableData="tableData"
+        @cancelDelete="handleCancelDelete"
+        @delete="handleDelete"
+        @edit="handleEdit"
+      />
     </div>
     <div class="pagination">
       <!-- 分页 -->
@@ -29,7 +34,7 @@
 <script>
 import Search from "./Search";
 import List from "./List";
-import { productList } from "@/api/products";
+import { productList, productDelete } from "@/api/products";
 
 export default {
   components: {
@@ -90,6 +95,34 @@ export default {
       });
       this.total = resp.total;
       this.originTableData = resp.data;
+    },
+    handleCancelDelete() {
+      // 取消删除
+      this.$message({
+        type: "info",
+        message: "已取消删除",
+      });
+    },
+    handleDelete(id) {
+      // 删除
+      productDelete(id).then((resp) => {
+        if (resp.data.deletedCount) {
+          this.fetchData();
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        } else {
+          this.$message({
+            type: "info",
+            message: "删除失败",
+          });
+        }
+      });
+    },
+    handleEdit(row) {
+      // 编辑
+      this.$router.push({ name: "ProductEdit", params: { id: row.id } });
     },
   },
   created() {

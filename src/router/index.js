@@ -48,6 +48,12 @@ const routes = [
         meta: { title: "商品列表", icon: "el-icon-document" },
       },
       {
+        path: "productEdit/:id",
+        name: "ProductEdit",
+        component: () => import("@/views/Product/components/EditAdd"),
+        meta: { title: "编辑商品", hide: true },
+      },
+      {
         path: "productAdd",
         name: "ProductAdd",
         component: () => import("@/views/Product/ProductAdd"),

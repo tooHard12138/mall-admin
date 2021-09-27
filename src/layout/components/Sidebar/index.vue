@@ -23,7 +23,7 @@
         <el-menu-item
           :route="children"
           v-for="children in router.children"
-          v-if="showPage($store.state.user.user.role, children.meta.needAdmin)"
+          v-if="showPage($store.state.user.user.role, children.meta.needAdmin) && !children.meta.hide"
           :key="children.pash"
           :index="children.name"
         >
