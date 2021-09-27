@@ -1,12 +1,15 @@
 <template>
   <div class="product-list-container">
     <div class="search-box">
+      <!-- 搜索 -->
       <Search @submitSearch="submitSearch" />
     </div>
     <div class="list-box">
+      <!-- 表格 -->
       <List :tableData="tableData" />
     </div>
     <div class="pagination">
+      <!-- 分页 -->
       <el-pagination
         hide-on-single-page
         background
@@ -47,11 +50,7 @@ export default {
     tableData() {
       const category = this.$store.state.user.category;
       return this.originTableData.map((it) => {
-        if (it.status) {
-          it.status = "上架";
-        } else {
-          it.status = "下架";
-        }
+        it.status = it.status ? "上架" : "下架";
         it.category = this.formatCate(it.category, category);
         return it;
       });
@@ -68,6 +67,7 @@ export default {
       // 提交搜索
       this.searchWord = formSearch.searchWord;
       this.category = formSearch.category;
+      this.page = 1;
       this.fetchData();
     },
 

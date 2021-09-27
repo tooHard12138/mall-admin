@@ -69,4 +69,7 @@ export default {
 .input {
   margin-right: 20px;
 }
+.demo-form-inline {
+  height: 100%;
+}
 </style>

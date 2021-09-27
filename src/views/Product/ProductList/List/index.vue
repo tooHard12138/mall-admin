@@ -84,10 +84,16 @@
 
 <script>
 export default {
-  props: ["tableData"],
+  props: {
+    tableData: {
+      type: Array,
+      required: true,
+    },
+  },
   methods: {
     handleEdit(row) {
       console.log("编辑", row);
+      this.$router.push({name: "ProductEdit"})
     },
     handleDelete(row) {
       console.log("删除", row);
