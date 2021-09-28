@@ -9,7 +9,12 @@ export function productList(params = {}) {
 
 // 删除商品
 export function productDelete(id) {
-  return ins.delete(`/products/${id}`,{
-    params:{}
+  return ins.delete(`/products/${id}`, {
+    params: {},
   });
+}
+
+// 新增商品
+export function productAdd(params) {
+  return ins.post("/products/add", params);
 }

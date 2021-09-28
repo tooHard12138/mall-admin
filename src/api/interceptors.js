@@ -8,7 +8,11 @@ const ins = axios.create({
 ins.interceptors.request.use(
   function(config) {
     if (!config.url.includes("passport")) {
-      config.params.appkey = stoer.state.user.user.appkey;
+      if (config.method === "post") {
+        config.data.appkey = stoer.state.user.user.appkey;
+      } else {
+        config.params.appkey = stoer.state.user.user.appkey;
+      }
     }
     return config;
   },

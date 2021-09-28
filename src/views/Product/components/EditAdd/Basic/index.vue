@@ -1,6 +1,7 @@
 <template>
   <div class="basic-container">
-    <el-form ref="form" :model="form" label-width="auto">
+    <!--  -->
+    <el-form ref="form" :model="form" label-width="100px">
       <el-form-item
         label="商品标题"
         prop="title"

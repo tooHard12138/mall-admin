@@ -24,6 +24,7 @@
           v-show="active === 1"
           :active="active"
           @saleSubmit="saleSubmit"
+          @previous="previous"
         />
       </div>
     </div>
@@ -33,12 +34,14 @@
 <script>
 import Basic from "./Basic";
 import Sale from "./Sale";
+import { productAdd } from "@/api/products";
 
 export default {
   data() {
     return {
       active: 0,
       basicData: {},
+      saleData: {},
     };
   },
   components: {
@@ -46,13 +49,28 @@ export default {
     Sale,
   },
   methods: {
+    previous(active) {
+      // 返回上一步 (基本信息)
+      this.active = active;
+    },
     basicSubmit(e) {
+      // 基本信息提交，进入下一步
       this.active = e.active;
       this.basicData = e.basicData;
-      console.log(e.basicData);
     },
     saleSubmit(e) {
-      this.active = e;
+      // 销售信息提交，提交数据
+      this.saleData = e;
+      productAdd({
+        ...this.basicData,
+        ...e,
+      }).then((resp) => {
+        this.$router.push({ name: "ProductList" });
+        this.$message({
+          message: "添加成功",
+          type: "success",
+        });
+      });
     },
   },
 };
