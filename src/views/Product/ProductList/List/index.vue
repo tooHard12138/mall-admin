@@ -99,7 +99,7 @@ export default {
       // 处理删除
       const id = row.id;
       this.$confirm(
-        `<span style="color: red;"">确认删除标题为:${row.title}的商品吗？</span>`,
+        `<span style="color: red;"">确认删除标题为: <strong>${row.title}</strong> 的商品吗？</span>`,
         "确认删除",
         {
           confirmButtonText: "确定",

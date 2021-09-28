@@ -127,10 +127,6 @@ export default {
   },
   created() {
     this.fetchData();
-
-    productList().then((resp) => {
-      console.log(resp);
-    });
   },
 };
 </script>

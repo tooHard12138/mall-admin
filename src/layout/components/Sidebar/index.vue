@@ -6,8 +6,6 @@
       text-color="#fff"
       :default-active="active"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       :collapse="isCollapse"
     >
       <el-submenu
@@ -23,10 +21,7 @@
         <el-menu-item
           :route="children"
           v-for="children in router.children"
-          v-if="
-            showPage($store.state.user.user.role, children.meta.needAdmin) &&
-            !children.meta.hide
-          "
+          v-if=" showPage($store.state.user.user.role, children.meta.needAdmin) && !children.meta.hide"
           :key="children.pash"
           :index="children.name"
         >
@@ -54,12 +49,6 @@ export default {
   },
   methods: {
     showPage,
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
   },
 };
 </script>

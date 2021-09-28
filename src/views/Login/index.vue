@@ -1,102 +1,48 @@
 <template>
-  <div class="login-container">
-    <el-form
-      :model="loginForm"
-      status-icon
-      :rules="rules"
-      ref="loginForm"
-      label-width="100px"
-      class="demo-loginForm"
-    >
-      <el-form-item label="邮箱" prop="email">
-        <el-input
-          type="text"
-          v-model="loginForm.email"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input
-          type="password"
-          v-model="loginForm.password"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')"
-          >登录</el-button
-        >
-        <el-button @click="resetForm('loginForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="container">
+    <h1 class="title">{{ isRegister ? "注册" : "登录" }}</h1>
+    <Login v-if="!isRegister" @register="handleRegister" />
+    <Register v-else @toLogin="handleToLogin" />
   </div>
 </template>
 
 <script>
-import { userLogin } from "@/api/user";
+import Login from "./login";
+import Register from "./register";
 
 export default {
+  components: {
+    Login,
+    Register,
+  },
   data() {
-    var emailReg = /^\w+@[a-z0-9]+\.[a-z]{2,4}$/;
-    var validateEmail = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入邮箱"));
-      } else if (!emailReg.test(value)) {
-        callback(new Error("邮箱格式不正确"));
-      } else {
-        callback();
-      }
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        callback();
-      }
-    };
     return {
-      loginForm: {
-        email: "",
-        password: "",
-      },
-      rules: {
-        email: [{ validator: validateEmail, trigger: "change" }],
-        password: [{ validator: validatePass, trigger: "change" }],
-      },
+      isRegister: false,
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(async (valid) => {
-        if (valid) {
-          try {
-            // 密码正确，登录
-            const user = await userLogin(this.loginForm);
-            this.$store.dispatch("user/userLogin", user);
-            this.$router.push("/");
-          } catch (error) {
-            this.$message({
-              message: error,
-              type: "error",
-            });
-          }
-        }
-      });
+    handleRegister() {
+      this.isRegister = true;
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    handleToLogin() {
+      this.isRegister = false;
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.login-container {
+.container {
   width: 400px;
   height: 300px;
   position: fixed;
   top: 100px;
   left: 50%;
   transform: translate(-60%);
+  .title {
+    transform: translateX(30px);
+    text-align: center;
+    margin-bottom: 50px;
+  }
 }
 </style>
