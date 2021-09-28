@@ -2,9 +2,9 @@
   <div class="basic-container">
     <el-form ref="form" :model="form" label-width="auto">
       <el-form-item
-        label="标题"
+        label="商品标题"
         prop="title"
-        :rules="[{ required: true, message: '请输入标题', trigger: 'blur' }]"
+        :rules="[{ required: true, message: '请输入标题', trigger: 'change' }]"
       >
         <el-input v-model="form.title"></el-input>
       </el-form-item>
@@ -14,9 +14,10 @@
       </el-form-item>
 
       <el-form-item
+        class="cate"
         label="商品类目"
         prop="category"
-        :rules="[{ required: true, message: '请输入类名', trigger: 'blur' }]"
+        :rules="[{ required: true, message: '请输入类名', trigger: 'change' }]"
       >
         <el-select
           placeholder=""
@@ -35,7 +36,9 @@
 
       <el-form-item
         prop="c_items"
-        :rules="[{ required: true, message: '请输入子类名', trigger: 'blur' }]"
+        :rules="[
+          { required: true, message: '请输入子类名', trigger: 'change' },
+        ]"
       >
         <el-select
           placeholder="请添加子类名"
@@ -54,16 +57,25 @@
       <el-form-item
         label="商品标签"
         prop="tags"
-        :rules="[{ required: true, message: '请添加标签', trigger: 'blur' }]"
+        :rules="[{ required: true, message: '请添加标签', trigger: 'change' }]"
       >
-        <el-autocomplete
-          class="inline-input"
-          v-model="form.tags"
-          :fetch-suggestions="querySearch"
+        <el-select
+          class="select"
           placeholder="请添加标签"
-          @select="handleSelect"
+          v-model="form.tags"
+          multiple
+          filterable
+          allow-create
+          default-first-option
         >
-        </el-autocomplete>
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item>
@@ -86,10 +98,10 @@ export default {
         desc: "",
         category: "",
         c_items: "",
-        tags: "",
+        tags: [],
       },
-      restaurants: [],
       c_items: [],
+      options: [{ value: "包邮，最晚次日达", label: "包邮，最晚次日达" }],
     };
   },
   computed: {
@@ -108,48 +120,18 @@ export default {
         }
       });
     },
-    querySearch(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString
-        ? restaurants.filter(this.createFilter(queryString))
-        : restaurants;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
-    createFilter(queryString) {
-      return (restaurant) => {
-        return (
-          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
-          0
-        );
-      };
-    },
-    loadAll() {
-      return [
-        { value: "阳阳麻辣烫", address: "天山西路389号" },
-        {
-          value: "南拳妈妈龙虾盖浇饭",
-          address: "普陀区金沙江路1699号鑫乐惠美食广场A13",
-        },
-      ];
-    },
-    handleSelect(item) {
-      // 商品标签选中后
-      console.log(item);
-    },
     selectChange(id) {
       this.c_items = this.category.find((it) => it.id === id).c_items;
     },
-  },
-  created() {
-    this.restaurants = this.loadAll();
   },
 };
 </script>
 
 <style lang="less" scoped>
-.select,
-.inline-input {
+.select {
   width: 100%;
+}
+.cate {
+  margin-bottom: 5px;
 }
 </style>

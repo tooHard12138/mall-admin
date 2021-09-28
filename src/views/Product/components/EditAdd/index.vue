@@ -49,6 +49,7 @@ export default {
     basicSubmit(e) {
       this.active = e.active;
       this.basicData = e.basicData;
+      console.log(e.basicData);
     },
     saleSubmit(e) {
       this.active = e;
@@ -75,6 +76,7 @@ export default {
 }
 .content {
   margin: 0 auto;
-  width: 50%;
+  width: 40%;
+  transform: translateX(-30px);
 }
 </style>

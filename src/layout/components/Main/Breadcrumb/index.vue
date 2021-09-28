@@ -18,13 +18,17 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <ul class="user">
-      <li>
-        {{ $store.state.user.user.username }}
-        <i class="el-icon-arrow-down"></i>
-      </li>
-      <li @click="out">退出</li>
-    </ul>
+    <div class="user">
+      <el-dropdown @command="handleCommand">
+        <span class="el-dropdown-link">
+          {{ $store.state.user.user.username }}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="out">退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -33,6 +37,11 @@ export default {
   methods: {
     handleBtn() {
       this.$store.dispatch("sidebar/asyncSetIsCollapse");
+    },
+    handleCommand(command) {
+      if (command === "out") {
+        this.out();
+      }
     },
     out() {
       // 登出
@@ -59,24 +68,19 @@ export default {
     transform: translateY(3px);
   }
   .user {
-    text-align: center;
-    cursor: pointer;
+    margin-right: 20px;
     position: absolute;
     top: 0;
     right: 0;
-    width: 150px;
-    z-index: 100;
-    li:not(:first-child) {
-      background: rgb(84, 92, 100);
-      color: #fff;
-      display: none;
-      &:hover {
-        color: #409eff;
-      }
-    }
-    &:hover li {
-      display: block;
-    }
   }
+}
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+  font-size: 15px;
+  font-weight: bold;
+}
+.el-icon-arrow-down {
+  font-size: 15px;
 }
 </style>

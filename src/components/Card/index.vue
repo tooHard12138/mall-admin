@@ -1,6 +1,6 @@
 <template>
   <div class="card-container">
-    <el-card class="box-card">
+    <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
         <span>{{ title }}</span>
       </div>
