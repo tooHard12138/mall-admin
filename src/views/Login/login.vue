@@ -10,6 +10,7 @@
     >
       <el-form-item label="邮箱" prop="email">
         <el-input
+          placeholder="请输入邮箱"
           type="text"
           v-model="loginForm.email"
           autocomplete="off"
@@ -17,6 +18,7 @@
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
+          placeholder="请输入密码"
           type="password"
           v-model="loginForm.password"
           autocomplete="off"
