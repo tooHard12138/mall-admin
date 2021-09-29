@@ -128,6 +128,11 @@ export default {
       };
     },
   },
+  created() {
+    if (this.form.category) {
+      this.selectChange(this.form.category);
+    }
+  },
 };
 </script>
 
@@ -138,7 +143,7 @@ export default {
 .cate {
   margin-bottom: 5px;
 }
-.item{
+.item {
   margin-top: 50px;
 }
 </style>

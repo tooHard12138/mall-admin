@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     fetchData() {
-      // 发送请求，修改商品
+      // 发送请求，添加商品
       productAdd(this.formData).then((resp) => {
         this.$router.push({ name: "ProductList" });
         this.$message({

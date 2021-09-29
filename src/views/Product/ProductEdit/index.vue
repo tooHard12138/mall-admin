@@ -34,11 +34,9 @@ export default {
     },
   },
   async created() {
-    // 接口返回的对象里没有子类目，所以子类目哪一项是空的 undefined
+    // 接口有点bug 没有子类目
     const resp = await productDetails(this.$route.params.id);
-    for (const key in this.formData) {
-      this.formData[key] = resp[key];
-    }
+    this.formData = resp;
   },
 };
 </script>
