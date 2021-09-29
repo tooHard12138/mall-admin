@@ -16,12 +16,14 @@
     <div class="form-box">
       <div class="content">
         <Basic
-          v-show="active === 0"
+          :formData="formData"
+          v-if="active === 0"
           :active="active"
           @basicSubmit="basicSubmit"
         />
         <Sale
-          v-show="active === 1"
+          :formData="formData"
+          v-if="active === 1"
           :active="active"
           @saleSubmit="saleSubmit"
           @previous="previous"
@@ -34,14 +36,12 @@
 <script>
 import Basic from "./Basic";
 import Sale from "./Sale";
-import { productAdd } from "@/api/products";
 
 export default {
+  props: ["formData"],
   data() {
     return {
       active: 0,
-      basicData: {},
-      saleData: {},
     };
   },
   components: {
@@ -49,28 +49,19 @@ export default {
     Sale,
   },
   methods: {
-    previous(active) {
+    previous(e) {
       // 返回上一步 (基本信息)
-      this.active = active;
+      this.$emit("previous", e.saleData);
+      this.active = e.active;
     },
     basicSubmit(e) {
       // 基本信息提交，进入下一步
+      this.$emit("basicSubmit", e.basicData);
       this.active = e.active;
-      this.basicData = e.basicData;
     },
-    saleSubmit(e) {
+    saleSubmit(saleData) {
       // 销售信息提交，提交数据
-      this.saleData = e;
-      productAdd({
-        ...this.basicData,
-        ...e,
-      }).then((resp) => {
-        this.$router.push({ name: "ProductList" });
-        this.$message({
-          message: "添加成功",
-          type: "success",
-        });
-      });
+      this.$emit("saleSubmit", saleData);
     },
   },
 };

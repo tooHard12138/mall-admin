@@ -79,7 +79,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item class="item">
         <el-button style="margin-top: 12px" @click="submitForm('form')"
           >下一步</el-button
         >
@@ -90,17 +90,11 @@
 
 <script>
 import { mapState } from "vuex";
+import backfill from "../mixin/backfill";
 export default {
-  props: ["active"],
+  mixins: [backfill],
   data() {
     return {
-      form: {
-        title: "",
-        desc: "",
-        category: "",
-        c_items: "",
-        tags: [],
-      },
       c_items: [],
       options: [{ value: "包邮，最晚次日达", label: "包邮，最晚次日达" }],
     };
@@ -113,7 +107,7 @@ export default {
       // 提交表单
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // 表单验证成功，提交
+          // 表单验证成功，下一页
           this.$emit("basicSubmit", {
             active: this.active + 1,
             basicData: this.form,
@@ -123,6 +117,15 @@ export default {
     },
     selectChange(id) {
       this.c_items = this.category.find((it) => it.id === id).c_items;
+    },
+    setForm() {
+      return {
+        title: this.formData.title,
+        desc: this.formData.desc,
+        category: this.formData.category,
+        c_items: this.formData.c_items,
+        tags: this.formData.tags,
+      };
     },
   },
 };
@@ -134,5 +137,8 @@ export default {
 }
 .cate {
   margin-bottom: 5px;
+}
+.item{
+  margin-top: 50px;
 }
 </style>

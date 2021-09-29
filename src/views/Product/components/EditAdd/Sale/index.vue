@@ -45,6 +45,7 @@
             :on-remove="handleRemove"
             :on-success="success"
             name="avatar"
+            :file-list="fileList"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -68,20 +69,19 @@
 </template>
 
 <script>
+import backfill from "../mixin/backfill";
+
 export default {
-  props: ["active"],
+  mixins: [backfill],
   data() {
     return {
-      form: {
-        price: 0,
-        price_off: 0,
-        inventory: 0,
-        unit: "",
-        images: [],
-      },
       dialogImageUrl: "",
       dialogVisible: false,
+      fileList: [],
     };
+  },
+  created() {
+    this.fileList = this.form.images.map((it) => ({ url: it }));
   },
   methods: {
     submitForm(formName) {
@@ -95,11 +95,20 @@ export default {
     },
     previous() {
       // 上一步
-      this.$emit("previous", this.active - 1);
+      this.$emit("previous", {
+        active: this.active - 1,
+        saleData: this.form,
+      });
     },
     handleRemove(file) {
       // 从文件列表删除图片
-      this.form.images = this.form.images.filter((it) => it !== file.response.data.url);
+      if (file.response) {
+        this.form.images = this.form.images.filter(
+          (it) => it !== file.response.data.url
+        );
+      } else {
+        this.form.images = this.form.images.filter((it) => it !== file.url);
+      }
     },
     handlePictureCardPreview(file) {
       // 点击查看图片
@@ -108,7 +117,16 @@ export default {
     },
     success(response) {
       // 文件上传成功
-      this.form.images.push(response.data.url);
+      this.form.images = this.form.images.concat([response.data.url]);
+    },
+    setForm() {
+      return {
+        price: this.formData.price,
+        price_off: this.formData.price_off,
+        inventory: this.formData.inventory,
+        unit: this.formData.unit,
+        images: this.formData.images,
+      };
     },
   },
 };

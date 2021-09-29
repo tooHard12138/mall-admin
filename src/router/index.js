@@ -50,7 +50,7 @@ const routes = [
       {
         path: "productEdit/:id",
         name: "ProductEdit",
-        component: () => import("@/views/Product/components/EditAdd/index"),
+        component: () => import("@/views/Product/ProductEdit"),
         meta: { title: "编辑商品", hide: true },
       },
       {

@@ -18,3 +18,15 @@ export function productDelete(id) {
 export function productAdd(params) {
   return ins.post("/products/add", params);
 }
+
+// 查询商品详情(用来编辑商品时回填数据)
+export function productDetails(id) {
+  return ins.get(`/products/${id}`, {
+    params: {},
+  });
+}
+
+// 编辑商品
+export function productEdit(params) {
+  return ins.put("/products/edit", params);
+}
