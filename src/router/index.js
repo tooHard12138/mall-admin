@@ -35,6 +35,12 @@ const routes = [
   },
 
   {
+    path: "/index.html",
+    redirect: { name: "Home" },
+    meta: { hide: true },
+  },
+
+  {
     path: "/product",
     component: Layout,
     name: "Product",
@@ -64,6 +70,20 @@ const routes = [
         name: "ProductCate",
         component: () => import("@/views/Product/ProductCate"),
         meta: { needAdmin: true, title: "类名管理", icon: "el-icon-mobile" },
+      },
+    ],
+  },
+
+  {
+    path: "*",
+    component: Layout,
+    name: "NotFound",
+    meta: { hide: true },
+    redirect: "/404",
+    children: [
+      {
+        path: "/404",
+        component: () => import("@/views/404"),
       },
     ],
   },
